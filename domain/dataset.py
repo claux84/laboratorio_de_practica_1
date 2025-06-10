@@ -35,10 +35,17 @@ class Dataset(ABC):
         return True
 
     def process_data(self):
-        pass
+        if self.data is not None:
+            self.__data.columns = self.data.columns.str.lower().str.replace(" ", "_")
+            self.__data = self.data.drop_duplicates()
+            for col in self.data.select_dtypes(include="object").columns:
+                self.__data[col] = self.data[col].astype(str).str.strip()
+            print("Transformaciones aplicadas")
+        else:
+            print("No hay datos para transformar.")
 
     def show_summary(self):
-        pass
+        return print(self.data.describe(include='all') if self.data is not None else "No hay Datos")
     
 
 

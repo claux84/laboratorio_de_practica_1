@@ -8,10 +8,8 @@ class DatasetJSON(Dataset):
     def load_data(self):
         try:
             df = pd.read_json(self.source)
-
-            # Verificar si un vañor es una lista
             def es_lista(x):
-               return isinstance(x, list)
+                return isinstance(x, list)
 
             # Transformar todas las columnas tipo list a string
             def lista_a_string(x):
@@ -22,6 +20,7 @@ class DatasetJSON(Dataset):
                 if df[col].apply(es_lista).any():
                     df[col] = df[col].apply(lista_a_string)
 
+
             self.data = df
             
             print(self.data)
@@ -31,4 +30,6 @@ class DatasetJSON(Dataset):
                  print("Datos validados en el Json")
                  self.process_data()
         except Exception as e:
-            print(f"Error cargando JSON: {e.__getstate__}")
+            print(f"Error cargando JSON: {e.__traceback__}")
+
+
