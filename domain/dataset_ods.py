@@ -10,10 +10,7 @@ class DatasetODS(Dataset):
         try:
             df = read_ods(self.source)
             self.data = df
-            print("ODS cargado.")
             print(self.data)
-            if self.validate_data():
-                print("Datos validados en el ODS")
-                self.process_data()
+            print("ODS cargado.")
         except Exception as e:
             print(f"Error cargando ODS: {e}")

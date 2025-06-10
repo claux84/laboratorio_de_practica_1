@@ -1,23 +1,21 @@
 from os import path
-from domain.dataset_json import DatasetJSON
 from domain.dataset_tsv import DatasetTSV
 from domain.dataset_ods import DatasetODS
 from data.data_saver import DataSaver
 
-# Ruta de archivos
-#json_path = path.join(path.dirname(__file__), "files/friends.json")
-tsv_path = path.join(path.dirname(__file__), "files/users.tsv")
-ods_path = path.join(path.dirname(__file__), "files/ventas.ods")
 
-# Cargar y transformar
+tsv_path = path.join(path.dirname(__file__), "files/house-price.tsv")
+ods_path = path.join(path.dirname(__file__), "files/clientes.ods")
+
+
 tsv = DatasetTSV(tsv_path)
 tsv.load_data()
+tsv.validate_data()
 
-#json = DatasetJSON(json_path)
-#json.load_data()
 
 ods = DatasetODS(ods_path)
 ods.load_data()
+ods.validate_data()
 
 db = DataSaver()
 db.save_dataframe(tsv.data, "users")

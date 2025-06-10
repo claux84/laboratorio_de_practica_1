@@ -9,10 +9,7 @@ class DatasetTSV(Dataset):
         try:
             df = pd.read_table(self.source)
             self.data = df
-            print("TSV cargado.")
             print(self.data)
-            if self.validate_data():
-                print("Datos validados en el TSV")
-                self.process_data()
+            print("TSV cargado.")
         except Exception as e:
             print(f"Error cargando TSV: {e}")
