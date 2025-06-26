@@ -4,7 +4,7 @@ from domain.dataset_ods import DatasetODS
 from data.data_saver import DataSaver
 
 
-tsv_path = path.join(path.dirname(__file__), "files/house-price.tsv")
+tsv_path = path.join(path.dirname(__file__), "files/users.tsv")
 ods_path = path.join(path.dirname(__file__), "files/clientes.ods")
 
 
