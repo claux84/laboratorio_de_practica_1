@@ -19,4 +19,4 @@ ods.validate_data()
 
 db = DataSaver()
 db.save_dataframe(tsv.data, "users")
-db.save_dataframe(ods.data, "ventas")
+db.save_dataframe(ods.data, "clientes")

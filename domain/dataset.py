@@ -38,33 +38,46 @@ class Dataset(ABC):
         if self.data.duplicated().sum() > 0:
             df = df.dropduplicates()
             print("Filas duplicadas detectadas y eliminadas.")
-
+        # validaciones de tipos de datos
         if 'name' in df.columns:
             df['name'] = df['name'].astype(str)
         if 'email' in df.columns:
             df['email'] = df['email'].astype(str)
-            #df = df[df['email'].apply(validate_email)]
-        
-        if 'phone_number' in df.columns:
-            phone_number = df['phone_number'].apply(validate_phone_number)
-            invalid_count = phone_number.isnull().sum().sum()
-            print("Se han encontrado ", invalid_count , " numeros invalidos")
-            #df = df[df['phone_number'].apply(validate_phone_number)]
+        if 'random_number'in df.columns:
+            df['random_number'] = df['random_number'].astype('int32')
 
-
+        # validacion de fecha: se controlan todas las columnas y si la mayoria de los datos de una columna son del tipo fecha si cambia el tipo de dato 
         try:
             for col in df.columns:
                 if df[col].dtype == 'object':
-                    time_column = pd.to_datetime(df[col], errors = 'coerce', dayfirst= True)
+                    time_column = pd.to_datetime(df[col], errors = 'coerce', format='ISO8601')
                     nat_percentage = time_column.isnull().sum().sum()/len(df)
                     if nat_percentage < 0.1:
                         df[col] = time_column
         except Exception as e:
             print(f"Error validando fecha: {e}")
 
+        # validaciones de campos obligatorios 
+        required_fields = ['name', 'email']
+        if df[required_fields].isnull().values.any():
+            print("Error: Algunos campos obligatorios tienen valores nulos.")
+        
+        # Validaciones de formatos de correo telefono 
+        if 'phone_number' in df.columns:
+            phone_number = df['phone_number'].apply(validate_phone_number)
+            invalid_count = phone_number[phone_number== False].count()
+            if invalid_count > 0:
+                print("Se han encontrado ", invalid_count , " números telefonicos invalidos")
 
-        df = df[(df['name'].notnull()) &  
-                (df['email'].notnull())]
+        if 'email' in df.columns:
+            email = df['email'].apply(validate_email)
+            invalid_count = email[email== False].count()
+            if invalid_count> 0:
+                print("Se han encontrado ", invalid_count , " emails invalidos")
+
+        self.data = df
+
+
         
         
         

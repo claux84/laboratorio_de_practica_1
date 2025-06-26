@@ -9,7 +9,6 @@ class DatasetTSV(Dataset):
         try:
             df = pd.read_table(self.source)
             self.data = df
-            print(self.data)
-            print("TSV cargado.")
+            print(f"Archivo TSV cargado" )
         except Exception as e:
-            print(f"Error cargando TSV: {e}")
+            print(f"Error cargando archivo TSV: {e}")

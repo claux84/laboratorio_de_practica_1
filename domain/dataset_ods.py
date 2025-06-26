@@ -10,7 +10,6 @@ class DatasetODS(Dataset):
         try:
             df = read_ods(self.source)
             self.data = df
-            print(self.data)
-            print("ODS cargado.")
+            print(f"Archivo ODS cargado")
         except Exception as e:
-            print(f"Error cargando ODS: {e}")
+            print(f"Error cargando archivo ODS: {e}")
